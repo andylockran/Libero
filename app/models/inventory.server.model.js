@@ -20,11 +20,6 @@ var InventorySchema = new Schema({
 		type: Date,
 		default: Date.now
 	},
-	picture: {
-		type: String,
-		default: '',
-		updated: { type: Date, default: Date.now }
-	},
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
