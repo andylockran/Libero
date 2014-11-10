@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
+
 /**
  * Inventory Schema
  */
@@ -16,6 +17,10 @@ var InventorySchema = new Schema({
 		required: 'Please fill Inventory name',
 		trim: true
 	},
+	location: {
+		type: String,
+		default: ''
+	},
 	created: {
 		type: Date,
 		default: Date.now
@@ -24,9 +29,9 @@ var InventorySchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
-	categories: {
-		type: [String],
-		index: true,
+	category: {
+		type: Schema.ObjectId,
+		required: 'Please fill out the category',
 		ref: 'Category'
 	}
 });

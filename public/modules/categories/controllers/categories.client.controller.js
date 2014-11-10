@@ -9,7 +9,8 @@ angular.module('categories').controller('CategoriesController', ['$scope', '$sta
 		$scope.create = function() {
 			// Create new Category object
 			var category = new Categories ({
-				name: this.name
+				name: this.name,
+				description: this.description
 			});
 
 			// Redirect after save
@@ -18,6 +19,7 @@ angular.module('categories').controller('CategoriesController', ['$scope', '$sta
 
 				// Clear form fields
 				$scope.name = '';
+				$scope.description = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

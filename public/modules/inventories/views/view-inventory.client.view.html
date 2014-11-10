@@ -2,6 +2,11 @@
 	<div class="page-header">
 		<h1 data-ng-bind="inventory.name"></h1>
 	</div>
+	<div class="row col-md-12">
+		<pre>{{inventory.description}}</pre>
+	</div>
+
+
 	<div class="pull-right" data-ng-show="authentication.user._id == inventory.user._id">
 		<a class="btn btn-primary" href="/#!/inventories/{{inventory._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
@@ -16,6 +21,8 @@
 			<span data-ng-bind="inventory.created | date:'mediumDate'"></span>
 			by
 			<span data-ng-bind="inventory.user.displayName"></span>
+			in
+			<span data-ng-bind="inventory.category.name"></span>
 		</em>
 	</small>
 </section>

@@ -11,6 +11,7 @@
 				<span data-ng-bind="inventory.user.displayName"></span>
 			</small>
 			<h4 class="list-group-item-heading" data-ng-bind="inventory.name"></h4>
+            <p data-ng-bind="inventory.category"></p>
         </a>
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!inventories.$resolved || inventories.length">

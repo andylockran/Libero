@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Inventory = mongoose.model('Inventory'),
+	Category = mongoose.model('Category'),
 	_ = require('lodash');
 
 /**
@@ -72,7 +73,7 @@ exports.delete = function(req, res) {
 /**
  * List of Inventories
  */
-exports.list = function(req, res) { Inventory.find().sort('-created').populate('user', 'displayName').exec(function(err, inventories) {
+exports.list = function(req, res) { Inventory.find().sort('-created').populate('user', 'displayName').populate('category').exec(function(err, inventories) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -86,7 +87,7 @@ exports.list = function(req, res) { Inventory.find().sort('-created').populate('
 /**
  * Inventory middleware
  */
-exports.inventoryByID = function(req, res, next, id) { Inventory.findById(id).populate('user', 'displayName').exec(function(err, inventory) {
+exports.inventoryByID = function(req, res, next, id) { Inventory.findById(id).populate('user', 'displayName').populate('category').exec(function(err, inventory) {
 		if (err) return next(err);
 		if (! inventory) return next(new Error('Failed to load Inventory ' + id));
 		req.inventory = inventory ;

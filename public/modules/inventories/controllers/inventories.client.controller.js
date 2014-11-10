@@ -1,15 +1,19 @@
 'use strict';
 
 // Inventories controller
-angular.module('inventories').controller('InventoriesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Inventories',
-	function($scope, $stateParams, $location, Authentication, Inventories ) {
+angular.module('inventories').controller('InventoriesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Inventories', 'Categories',
+	function($scope, $stateParams, $location, Authentication, Inventories, Categories ) {
 		$scope.authentication = Authentication;
+		$scope.categories = Categories.query();
+
+		console.log($scope);
 
 		// Create new Inventory
 		$scope.create = function() {
 			// Create new Inventory object
 			var inventory = new Inventories ({
-				name: this.name
+				name: this.name,
+				category: this.category._id
 			});
 
 			// Redirect after save
@@ -18,6 +22,7 @@ angular.module('inventories').controller('InventoriesController', ['$scope', '$s
 
 				// Clear form fields
 				$scope.name = '';
+				$scope.category = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
