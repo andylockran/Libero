@@ -6,21 +6,28 @@ angular.module('inventories').controller('InventoriesController', ['$scope', '$s
 		$scope.authentication = Authentication;
 		$scope.categories = Categories.query();
 
+
+		var getmylocation = function () {
+			geolocation.getLocation()
+				.then(function(data) {
+					$scope.location = data.coords.latitude + ',' + data.coords.longitude;
+				},
+				function(err) {
+					console.log('error', err);
+				});
+		};
+
+		$scope.location = getmylocation();
+
 		// Create new Inventory
 		$scope.create = function() {
 			// Create new Inventory object
-
-			var location = geolocation.getLocation().then(function(data) {
-							return {lat:data.coords.latitude,long:data.coords.longitude};
-			});
-
-			console.log(location);
 
 			var inventory = new Inventories ({
 				name: this.name,
 				category: this.category._id,
 				description: this.description,
-				location: this.location
+				location: $scope.location
 				
 			});
 
@@ -56,7 +63,9 @@ angular.module('inventories').controller('InventoriesController', ['$scope', '$s
 
 		// Update existing Inventory
 		$scope.update = function() {
+
 			var inventory = $scope.inventory;
+			inventory.location = $scope.location;
 
 			inventory.$update(function() {
 				$location.path('inventories/' + inventory._id);
