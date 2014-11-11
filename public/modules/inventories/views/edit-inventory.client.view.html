@@ -8,15 +8,15 @@
                 <div class="form-group">
                     <label class="control-label" for="name">Name</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name" required>
-                        <input type="text" data-ng-model="colour" id="colour" class="form-control" placeholder="Colour" required>
-                        <select ng-options="c.name for c in categories" ng-model="category" name="category" required>
+                        <input type="text" data-ng-model="inventory.name" id="name" class="form-control" placeholder="Name" required>
+                        <textarea data-ng-model="inventory.description" id="description" class="form-control" placeholder="Description" required></textarea>
+                        <select ng-options="c.name for c in categories track by c._id" ng-model="inventory.category" name="category" ngSelectedrequired>
                             <option value="">-- choose category --</option>
                         </select>
 
-                        {{category}}
                     </div>
                 </div>
+
                 <div class="form-group">
                     <input type="submit" value="Update" class="btn btn-default">
                 </div>

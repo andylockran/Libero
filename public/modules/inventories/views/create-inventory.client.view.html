@@ -9,6 +9,7 @@
                     <label class="control-label" for="name">Name</label>
                     <div class="controls">
                         <input type="text" data-ng-model="name" id="name" class="form-control" placeholder="Name" required>
+                        <textarea data-ng-model="description" id="description" class="form-control" placeholder="Description" required></textarea>
                         <input type="text" data-ng-model="location" id="location" class="form-control" placeholder="location" required>
                         <select ng-options="c.name for c in categories" ng-model="category" name="category" required>
                             <option value="">-- choose category --</option>

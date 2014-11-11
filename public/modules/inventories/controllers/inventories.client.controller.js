@@ -1,19 +1,27 @@
 'use strict';
 
 // Inventories controller
-angular.module('inventories').controller('InventoriesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Inventories', 'Categories',
-	function($scope, $stateParams, $location, Authentication, Inventories, Categories ) {
+angular.module('inventories').controller('InventoriesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Inventories', 'Categories','geolocation',
+	function($scope, $stateParams, $location, Authentication, Inventories, Categories, geolocation ) {
 		$scope.authentication = Authentication;
 		$scope.categories = Categories.query();
-
-		console.log($scope);
 
 		// Create new Inventory
 		$scope.create = function() {
 			// Create new Inventory object
+
+			var location = geolocation.getLocation().then(function(data) {
+							return {lat:data.coords.latitude,long:data.coords.longitude};
+			});
+
+			console.log(location);
+
 			var inventory = new Inventories ({
 				name: this.name,
-				category: this.category._id
+				category: this.category._id,
+				description: this.description,
+				location: this.location
+				
 			});
 
 			// Redirect after save
@@ -23,6 +31,8 @@ angular.module('inventories').controller('InventoriesController', ['$scope', '$s
 				// Clear form fields
 				$scope.name = '';
 				$scope.category = '';
+				$scope.description = '';
+				$scope.location = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -46,7 +56,7 @@ angular.module('inventories').controller('InventoriesController', ['$scope', '$s
 
 		// Update existing Inventory
 		$scope.update = function() {
-			var inventory = $scope.inventory ;
+			var inventory = $scope.inventory;
 
 			inventory.$update(function() {
 				$location.path('inventories/' + inventory._id);
@@ -64,7 +74,7 @@ angular.module('inventories').controller('InventoriesController', ['$scope', '$s
 		$scope.findOne = function() {
 			$scope.inventory = Inventories.get({ 
 				inventoryId: $stateParams.inventoryId
-			});
+			})
 		};
 	}
 ]);

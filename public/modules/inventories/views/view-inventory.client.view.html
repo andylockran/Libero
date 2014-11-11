@@ -3,9 +3,9 @@
 		<h1 data-ng-bind="inventory.name"></h1>
 	</div>
 	<div class="row col-md-12">
-		<pre>{{inventory.description}}</pre>
+		<p>{{inventory.description}}</p>
+		<p> Location: {{inventory.location}}</p>
 	</div>
-
 
 	<div class="pull-right" data-ng-show="authentication.user._id == inventory.user._id">
 		<a class="btn btn-primary" href="/#!/inventories/{{inventory._id}}/edit">
