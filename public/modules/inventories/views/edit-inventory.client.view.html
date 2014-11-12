@@ -10,10 +10,12 @@
                     <div class="controls">
                         <input type="text" data-ng-model="inventory.name" id="name" class="form-control" placeholder="Name" required>
                         <textarea data-ng-model="inventory.description" id="description" class="form-control" placeholder="Description" required></textarea>
-                        <input type="text" value="{{ location }}" id="location" data-ng-model="inventory.location" name="Location">
                         <select ng-options="c.name for c in categories track by c._id" ng-model="inventory.category" name="category" ngSelectedrequired>
                             <option value="">-- choose category --</option>
                         </select>
+                        <div ng-app="ngMap" style="height: 300px;">
+                            <map center="{{inventory.location}}" zoom="12"></map>
+                        </div>
 
                     </div>
                 </div>

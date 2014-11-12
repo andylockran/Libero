@@ -4,7 +4,9 @@
 	</div>
 	<div class="row col-md-12">
 		<p>{{inventory.description}}</p>
-		<p>{{inventory.location}}</p>
+		<div ng-app="ngMap" style="height: 300px;">
+			<map center="{{inventory.location}}" zoom="12"></map>
+		</div>
 	</div>
 
 	<div class="pull-right" data-ng-show="authentication.user._id == inventory.user._id">

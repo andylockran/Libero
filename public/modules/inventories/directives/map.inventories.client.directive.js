@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-angular.module('inventories'.['ngMap']).directive('mapsHelper','ngMap', function() {
+angular.module('inventories').directive('mapsHelper', function() {
     return {
         restrict: 'E',
         scope: {

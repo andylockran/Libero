@@ -6,11 +6,10 @@ angular.module('inventories').controller('InventoriesController', ['$scope', '$s
 		$scope.authentication = Authentication;
 		$scope.categories = Categories.query();
 
-
 		var getmylocation = function () {
-			geolocation.getLocation()
+			return geolocation.getLocation()
 				.then(function(data) {
-					$scope.location = data.coords.latitude + ',' + data.coords.longitude;
+					$scope.location = data.coords;
 				},
 				function(err) {
 					console.log('error', err);
@@ -18,6 +17,50 @@ angular.module('inventories').controller('InventoriesController', ['$scope', '$s
 		};
 
 		$scope.location = getmylocation();
+
+		$scope.$on('mapInitialized', function(event, map) {
+			geolocation.getLocation()
+				.then(function(data) {
+					var topleftlat = data.coords.latitude + 0.01;
+					var topleftlong = data.coords.longitude - 0.01;
+					var bottomrightlat = data.coords.latitude - 0.01;
+					var bottomrightlong = data.coords.longitude + 0.01;
+
+			//var topleftlat = ($scope.location.latitude + 0.0001);
+			//console.log(topleftlat);
+					var lat = data.coords.latitude;
+					var long = data.coords.longitude;
+					var centreMap = new google.maps.LatLng(lat,long);
+					/*var bounds = new google.maps.LatLngBounds(
+						//new google.maps.LatLng($scope.location.latitude+);
+						new google.maps.LatLng(topleftlat,topleftlong),
+						new google.maps.LatLng(bottomrightlat,bottomrightlong)
+					);
+
+					// Define a rectangle and set its editable property to true.
+					var rectangle = new google.maps.Rectangle({
+						bounds: bounds,
+						editable: true
+					});
+*/
+					var circle = new google.maps.Circle({
+						strokeColor: '#FF0000',
+						strokeOpacity: 0.8,
+						strokeWeight: 2,
+						fillColor: '#FF0000',
+						fillOpacity: 0.35,
+						map: map,
+						center: centreMap,
+						radius:1000,
+						editable: true
+					});
+					circle.setMap(map);
+					//rectangle.setMap(map);
+					google.maps.event.addListener(circle, 'center_changed', function() {
+						$scope.location = circle.getCentre();
+					})
+				});
+		});
 
 		// Create new Inventory
 		$scope.create = function() {
@@ -65,7 +108,7 @@ angular.module('inventories').controller('InventoriesController', ['$scope', '$s
 		$scope.update = function() {
 
 			var inventory = $scope.inventory;
-			inventory.location = $scope.location;
+			inventory.location = $scope.location.latitude,$scope.location.longitude;
 
 			inventory.$update(function() {
 				$location.path('inventories/' + inventory._id);
@@ -83,7 +126,7 @@ angular.module('inventories').controller('InventoriesController', ['$scope', '$s
 		$scope.findOne = function() {
 			$scope.inventory = Inventories.get({ 
 				inventoryId: $stateParams.inventoryId
-			})
+			});
 		};
 	}
 ]);

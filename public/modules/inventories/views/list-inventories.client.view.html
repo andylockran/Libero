@@ -7,6 +7,11 @@
 			<h4 class="list-group-item-heading" data-ng-bind="inventory.name"></h4>        
             <div class="row col-md-12">
                 <img ng-src="{{inventory.image}}" alt="{{inventory.name}}"/>
+                <div class="row col-md-12">
+                    <map center="{{inventory.location}}" zoom="12" style="height: 50%">
+                        <heatmap-layer id="foo" data="taxiData"></heatmap>
+                    </map>
+                </div>
             </div>
             <small class="list-group-item-text">
                 Posted on
